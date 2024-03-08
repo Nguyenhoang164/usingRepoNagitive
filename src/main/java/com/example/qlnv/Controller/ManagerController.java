@@ -61,28 +61,19 @@ public class ManagerController {
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateManagerById(@PathVariable("id")int id,@RequestBody Manager manager){
-        Optional<Manager> managerOptional = managerService.findById(id);
-        if (!managerOptional.isPresent()){
-            return new ResponseEntity<>("manager id not exit",HttpStatus.NO_CONTENT);
-        }else {
-            managerOptional.get().setId(id);
-            managerService.save(managerOptional.get());
+            manager.setId(id);
+            managerService.save(manager);
             return new ResponseEntity<>("manager is update",HttpStatus.NO_CONTENT);
         }
-    }
     @GetMapping("/search/{variable}")
     public ResponseEntity<Iterable<Manager>> showAllManagerBySearch(@PathVariable("variable") String variable){
         Iterable<Manager> managers = managerService.findAllByFullNameContaining(variable);
         Iterable<Manager> managerList = managerService.findAllByAddressContaining(variable);
-        Iterable<Manager> managerAge = managerService.findAllByAgeContaining(Integer.parseInt(variable));
         List<Manager> list = new ArrayList<>();
         for (Manager manager : managers){
             list.add(manager);
         }
         for (Manager manager : managerList){
-            list.add(manager);
-        }
-        for (Manager manager : managerAge){
             list.add(manager);
         }
         if (list == null){

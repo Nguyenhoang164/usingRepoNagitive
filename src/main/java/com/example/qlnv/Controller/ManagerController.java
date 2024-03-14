@@ -63,7 +63,7 @@ public class ManagerController {
     public ResponseEntity<String> updateManagerById(@PathVariable("id")int id,@RequestBody Manager manager){
             manager.setId(id);
             managerService.save(manager);
-            return new ResponseEntity<>("manager is update",HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("manager is update",HttpStatus.OK);
         }
     @GetMapping("/search/{variable}")
     public ResponseEntity<Iterable<Manager>> showAllManagerBySearch(@PathVariable("variable") String variable){
